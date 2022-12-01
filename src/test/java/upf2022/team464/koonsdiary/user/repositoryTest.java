@@ -109,6 +109,24 @@ public class repositoryTest {
         List<User> list = userJpaRepository.findAll();
         assertThat(list).isEmpty();
         System.out.println("list is empty " + list.size());
+    }
 
+    @Test
+    @DisplayName("user: search by name success")
+    void search_user_success(){
+        // given
+        User user = User.builder()
+                .account("test")
+                .email("test@test.com")
+                .password("test")
+                .nickname("test")
+                .build();
+
+        // when
+        userJpaRepository.save(user);
+        User findUser = userJpaRepository.findByAccount(user.getAccount()).orElse(null);
+
+        // then
+       assertThat(findUser).isNotNull();
     }
 }

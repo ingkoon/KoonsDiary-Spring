@@ -5,6 +5,7 @@ import upf2022.team464.koonsdiary.user.domain.User;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class UserDto {
 
@@ -57,11 +58,18 @@ public class UserDto {
             private String refreshToken;
             private String accessToken;
 
-            public static ResponseDto of(User user, String accessToken){
+//            public static ResponseDto of(User user, String accessToken){
+//                return ResponseDto.builder()
+//                        .id(user.getId())
+//                        .userId(user.getAccount())
+//                        .accessToken(accessToken)
+//                        .build();
+//            }
+
+            public static ResponseDto of(User user){
                 return ResponseDto.builder()
                         .id(user.getId())
                         .userId(user.getAccount())
-                        .accessToken(accessToken)
                         .build();
             }
         }
@@ -136,6 +144,7 @@ public class UserDto {
                         .email(user.getEmail())
                         .build();
             }
+
         }
     }
     public static class Update{
@@ -189,19 +198,25 @@ public class UserDto {
     }
 
     public static class Search{
+        @ToString
+        @Builder
+        @Getter
+        public static class RequestDto{
+            private String account;
+        }
 
-        @AllArgsConstructor
-        @NoArgsConstructor
         @ToString
         @Builder
         @Getter
         public static class ResponseDto{
-            private String userList;
-
-            public static ResponseDto of(String userList){
-                return ResponseDto.builder().userList(userList).build();
+            private boolean result;
+            public static ResponseDto of(boolean result) {
+                return ResponseDto.builder()
+                        .result(result)
+                        .build();
             }
         }
     }
+
 }
 
