@@ -23,8 +23,8 @@ public class UserDto {
             private String email;
             @NotBlank(message = "닉네임을 제대로 입력해 주세요")
             private String nickname;
-            @NotNull(message = "이미지를 제대로 설정해 주세요.")
-            private Long imageId;
+//            @NotNull(message = "이미지를 제대로 설정해 주세요.")
+//            private Long imageId;
 
 //            public User toEntity(String password, ImagePath imagePath){
 //                User user = User.builder().account(account)
@@ -36,7 +36,7 @@ public class UserDto {
 //                return user;
 //            }
 
-            public User toEntity(String password){
+            public User toEntity(){
                 User user = User.builder().account(account)
                         .password(password)
                         .email(email)
@@ -59,6 +59,28 @@ public class UserDto {
 
             public static ResponseDto of(User user, String accessToken){
                 return ResponseDto.builder()
+                        .id(user.getId())
+                        .userId(user.getAccount())
+                        .accessToken(accessToken)
+                        .build();
+            }
+        }
+    }
+
+    public static class ReadAll{
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @ToString
+        @Builder
+        @Getter
+        public static class ResponseDto{
+            private Long id;
+            private String userId;
+            private String refreshToken;
+            private String accessToken;
+
+            public static ReadAll.ResponseDto of(User user, String accessToken){
+                return ReadAll.ResponseDto.builder()
                         .id(user.getId())
                         .userId(user.getAccount())
                         .accessToken(accessToken)
