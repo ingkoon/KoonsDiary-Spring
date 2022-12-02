@@ -1,10 +1,11 @@
-package upf2022.team464.koonsdiary.jwt;
+package upf2022.team464.koonsdiary.util.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +20,9 @@ import java.util.Map;
 @Service
 public class JwtServiceImpl implements JwtService{
 
-    private static final String SALT = "koonsdiary";
+
+    @Value("${jwt-salt}")
+    private String SALT;
     private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 60; // 엑세스 토큰의 만료기간을 한시간으로 지정
     private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위/ 2주의 만료기간을 갖는다.
 
