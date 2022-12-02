@@ -82,16 +82,11 @@ public class UserDto {
         @Builder
         @Getter
         public static class ResponseDto{
-            private Long id;
-            private String userId;
-            private String refreshToken;
-            private String accessToken;
+            private List<User> userList;
 
-            public static ReadAll.ResponseDto of(User user, String accessToken){
-                return ReadAll.ResponseDto.builder()
-                        .id(user.getId())
-                        .userId(user.getAccount())
-                        .accessToken(accessToken)
+            public static ReadAll.ResponseDto of(List<User> userList){
+                return ResponseDto.builder()
+                        .userList(userList)
                         .build();
             }
         }
@@ -157,7 +152,7 @@ public class UserDto {
         public static class RequestDto{
             private String nickname;
             private String password;
-            private Long imageId;
+//            private Long imageId;
         }
 
         @AllArgsConstructor
