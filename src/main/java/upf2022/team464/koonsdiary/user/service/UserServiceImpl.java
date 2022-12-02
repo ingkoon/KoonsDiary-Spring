@@ -8,6 +8,8 @@ import upf2022.team464.koonsdiary.user.domain.User;
 import upf2022.team464.koonsdiary.user.dto.UserDto;
 import upf2022.team464.koonsdiary.user.repository.UserJpaRepository;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -31,8 +33,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto.Read.ResponseDto findUserList() {
-        return null;
+    public UserDto.ReadAll.ResponseDto findUserList() {
+        List<User> userList = userJpaRepository.findAll();
+        return UserDto.ReadAll.ResponseDto.of(userList);
     }
 
     @Override
@@ -42,11 +45,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.ResponseDto responseDto) {
+
         return null;
     }
 
     @Override
     public UserDto.Search.ResponseDto checkId(UserDto.Search.RequestDto requestDto) {
-        return null;
+        User user = userJpaRepository.findByAccount(requestDto.getAccount()).orElse(null);
+        boolean result = true;
+        if(user==null) result = false;
+        return UserDto.Search.ResponseDto.of(result);
     }
 }
