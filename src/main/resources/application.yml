@@ -48,8 +48,9 @@ spring:
       port: 6379
       host: koonsdiary-001.o3v9n6.0001.apn2.cache.amazonaws.com
 
-
-
+    profiles:
+      include:
+        - jwt-salt
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace

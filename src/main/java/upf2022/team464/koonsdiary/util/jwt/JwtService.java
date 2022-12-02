@@ -1,4 +1,4 @@
-package upf2022.team464.koonsdiary.jwt;
+package upf2022.team464.koonsdiary.util.jwt;
 
 import java.util.Map;
 
