@@ -1,13 +1,16 @@
 package upf2022.team464.koonsdiary.util.jwt;
 
-
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-@Configuration
+//@Configuration
+@Getter
+@PropertySource("classpath:/application-jwt.yml")
 public class JwtSalt {
 
-    @Value("${jwt-salt}")
+    @Value("$jwt.salt}")
     private String salt;
 
     private static JwtSalt instance = new JwtSalt();
