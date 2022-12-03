@@ -4,6 +4,7 @@ package upf2022.team464.koonsdiary.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import upf2022.team464.koonsdiary.common.Enum.Role;
 
 import javax.persistence.*;
 
@@ -37,6 +38,12 @@ public class User {
 
     @Column(name = "user_fcm")
     private String fcmToken;
+
+    @Column(name ="user_role")
+    private Role role = Role.USER;
+
+    @Column(name = "user_delete")
+    private int delflag = 0;
 
 //    @OneToMany(mappedBy = "user")
 //    private List<RefreshToken> refreshToken = new ArrayList<>();

@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import upf2022.team464.koonsdiary.common.exception.UnAuthorizedException;
 import upf2022.team464.koonsdiary.user.domain.User;
 import upf2022.team464.koonsdiary.user.dto.UserDto;
 import upf2022.team464.koonsdiary.user.repository.UserJpaRepository;
@@ -51,7 +52,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto.Update.ResponseDto modifyUser(UserDto.Update.RequestDto requestDto) {
-        return null;
+        User user = userJpaRepository.findByNickname(requestDto.getNickname()).orElse(null);
+        if (user == null) throw new UnAuthorizedException();
+
+        user.updateNickname(requestDto.getNickname());
+        user.updatePassword(requestDto.getPassword());
+        userJpaRepository.save(user);
+
+        return UserDto.Update.ResponseDto.of(user);
     }
 
     @Override
@@ -62,9 +70,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto.Search.ResponseDto checkId(UserDto.Search.RequestDto requestDto) {
-        User user = userJpaRepository.findByAccount(requestDto.getAccount()).orElse(null);
-        boolean result = true;
-        if(user==null) result = false;
+        boolean result = userJpaRepository.existsByAccount(requestDto.getAccount());
+        return UserDto.Search.ResponseDto.of(result);
+    }
+
+    public UserDto.Search.ResponseDto checkEmail(String email){
+        boolean result = userJpaRepository.existsByEmail(email);
         return UserDto.Search.ResponseDto.of(result);
     }
 }
