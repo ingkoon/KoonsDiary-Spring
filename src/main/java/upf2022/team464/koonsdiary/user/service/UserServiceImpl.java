@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService{
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
+    @Transactional
     public UserDto.Create.ResponseDto addUser(UserDto.Create.RequestDto requestDto) {
         User user = requestDto.toEntity(); // dto에서 refreshtoken 생성
         userJpaRepository.save(user);
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public UserDto.Update.ResponseDto modifyUser(UserDto.Update.RequestDto requestDto) {
         User user = userJpaRepository.findByNickname(requestDto.getNickname()).orElse(null);
         if (user == null) throw new UnAuthorizedException();
@@ -63,19 +65,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.ResponseDto responseDto) {
 
         return null;
     }
 
     @Override
-    public UserDto.Search.ResponseDto checkId(UserDto.Search.RequestDto requestDto) {
+    public UserDto.SearchId.ResponseDto checkId(UserDto.SearchId.RequestDto requestDto) {
         boolean result = userJpaRepository.existsByAccount(requestDto.getAccount());
-        return UserDto.Search.ResponseDto.of(result);
+        return UserDto.SearchId.ResponseDto.of(result);
     }
 
-    public UserDto.Search.ResponseDto checkEmail(String email){
-        boolean result = userJpaRepository.existsByEmail(email);
-        return UserDto.Search.ResponseDto.of(result);
+    @Override
+    public UserDto.SearchEmail.ResponseDto checkEmail(UserDto.SearchEmail.RequestDto requestDto){
+        boolean result = userJpaRepository.existsByEmail(requestDto.getEmail());
+        return UserDto.SearchEmail.ResponseDto.of(result);
     }
 }

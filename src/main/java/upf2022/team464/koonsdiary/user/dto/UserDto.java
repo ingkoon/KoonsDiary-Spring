@@ -4,7 +4,6 @@ import lombok.*;
 import upf2022.team464.koonsdiary.user.domain.User;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class UserDto {
@@ -192,12 +191,33 @@ public class UserDto {
         }
     }
 
-    public static class Search{
+    public static class SearchId {
         @ToString
         @Builder
         @Getter
         public static class RequestDto{
             private String account;
+        }
+
+        @ToString
+        @Builder
+        @Getter
+        public static class ResponseDto{
+            private boolean result;
+            public static ResponseDto of(boolean result) {
+                return ResponseDto.builder()
+                        .result(result)
+                        .build();
+            }
+        }
+    }
+
+    public static class SearchEmail {
+        @ToString
+        @Builder
+        @Getter
+        public static class RequestDto{
+            private String email;
         }
 
         @ToString
