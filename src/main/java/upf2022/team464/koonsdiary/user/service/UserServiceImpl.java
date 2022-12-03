@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import upf2022.team464.koonsdiary.common.exception.UnAuthorizedException;
+
 import upf2022.team464.koonsdiary.user.domain.User;
 import upf2022.team464.koonsdiary.user.dto.UserDto;
 import upf2022.team464.koonsdiary.user.repository.UserJpaRepository;
@@ -66,6 +67,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
+    public UserDto.Update.ResponseDto modifyUser(UserDto.Update.RequestDto requestDto) {
+        return null;
+    }
+
+    @Override
     public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.ResponseDto responseDto) {
 
         return null;
@@ -81,5 +87,6 @@ public class UserServiceImpl implements UserService{
     public UserDto.SearchEmail.ResponseDto checkEmail(UserDto.SearchEmail.RequestDto requestDto){
         boolean result = userJpaRepository.existsByEmail(requestDto.getEmail());
         return UserDto.SearchEmail.ResponseDto.of(result);
+
     }
 }

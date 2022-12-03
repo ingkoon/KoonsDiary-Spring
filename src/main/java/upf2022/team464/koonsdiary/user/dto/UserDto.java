@@ -4,6 +4,7 @@ import lombok.*;
 import upf2022.team464.koonsdiary.user.domain.User;
 
 import javax.validation.constraints.NotBlank;
+
 import java.util.List;
 
 public class UserDto {
@@ -191,6 +192,7 @@ public class UserDto {
         }
     }
 
+
     public static class SearchId {
         @ToString
         @Builder
@@ -208,6 +210,7 @@ public class UserDto {
                 return ResponseDto.builder()
                         .result(result)
                         .build();
+
             }
         }
     }
@@ -229,6 +232,7 @@ public class UserDto {
                 return ResponseDto.builder()
                         .result(result)
                         .build();
+
             }
         }
     }

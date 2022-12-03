@@ -10,4 +10,5 @@ public interface UserService {
     public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.ResponseDto responseDto);
     public UserDto.SearchId.ResponseDto checkId(UserDto.SearchId.RequestDto requestDto);
     public UserDto.SearchEmail.ResponseDto checkEmail(UserDto.SearchEmail.RequestDto requestDto);
+
 }
