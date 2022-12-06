@@ -7,6 +7,8 @@ public interface UserService {
     public UserDto.Read.ResponseDtoV2 findUser(UserDto.Read.RequestDto requestDto);
     public UserDto.ReadAll.ResponseDto findUserList();
     public UserDto.Update.ResponseDto modifyUser(UserDto.Update.RequestDto requestDto);
-    public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.ResponseDto responseDto);
-    public UserDto.Search.ResponseDto checkId(UserDto.Search.RequestDto requestDto);
+    public UserDto.Delete.ResponseDto removeUser(UserDto.Delete.RequestDto requestDto);
+
+    public UserDto.SearchId.ResponseDto checkId(UserDto.SearchId.RequestDto requestDto);
+    public UserDto.SearchEmail.ResponseDto checkEmail(UserDto.SearchEmail.RequestDto requestDto);
 }

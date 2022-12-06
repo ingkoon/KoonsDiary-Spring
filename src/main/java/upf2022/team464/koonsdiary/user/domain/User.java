@@ -4,6 +4,7 @@ package upf2022.team464.koonsdiary.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import upf2022.team464.koonsdiary.common.Enum.Role;
 
 import javax.persistence.*;
 
@@ -38,6 +39,12 @@ public class User {
     @Column(name = "user_fcm")
     private String fcmToken;
 
+    @Column(name ="user_role")
+    private Role role = Role.USER;
+
+    @Column(name = "user_delete")
+    private int delflag = 0;
+
 //    @OneToMany(mappedBy = "user")
 //    private List<RefreshToken> refreshToken = new ArrayList<>();
 
@@ -62,7 +69,17 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String account, String nickname, String password, String email, Long kakaoToken, String fcmToken) {
+//    public User(Long id, String account, String nickname, String password, String email, Long kakaoToken, String fcmToken) {
+//        this.id = id;
+//        this.account = account;
+//        this.nickname = nickname;
+//        this.password = password;
+//        this.email = email;
+//        this.kakaoToken = kakaoToken;
+//        this.fcmToken = fcmToken;
+//    }
+
+    public User(Long id, String account, String nickname, String password, String email, Long kakaoToken, String fcmToken, Role role, int delflag) {
         this.id = id;
         this.account = account;
         this.nickname = nickname;
@@ -70,6 +87,8 @@ public class User {
         this.email = email;
         this.kakaoToken = kakaoToken;
         this.fcmToken = fcmToken;
+        this.role = role;
+        this.delflag = delflag;
     }
 
     // 사용자 닉네임 변경
@@ -85,6 +104,14 @@ public class User {
 
     // 사용자 패스워드 업데이트
     public void updatePassword(String password){ this.password = password; }
+
+    public void updateUserDelflag(){
+        if(this.delflag == 0) {
+            delflag = 1;
+            return;
+        }
+        delflag = 0;
+    }
 
     @Override
     public boolean equals(Object o) {
