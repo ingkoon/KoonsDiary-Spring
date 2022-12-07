@@ -1,1 +1,4 @@
 rootProject.name = 'koonsdiary'
+include 'koonsdiary-core'
+include 'koonsdiary-api'
+
