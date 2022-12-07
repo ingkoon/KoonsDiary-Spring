@@ -1,48 +1,84 @@
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-}
-
-group = 'upf2022.team464'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+//	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-redis'
+bootJar.enabled = false
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+subprojects {
+	group = 'upf2022.team464'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
 
+	apply plugin: 'java'
+	// build.gradle에서 api() 를 사용하려면 java-library 사용
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	// spring boot dependency를 사용하여 사용중인 부트 버전에서 자동으로 의존성을 가져온다.
+	apply plugin: 'io.spring.dependency-management'
 
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
 
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	repositories {
+		mavenCentral()
+	}
 
-	/*
-		jsonwebtoken 관련 dependency
-	*/
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	// 관리하는 모듈에 공통 dependencies
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	}
 
-	runtimeOnly 'com.h2database:h2'
-
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//project(':koonsdiary-core') {
+//	// 공통 코드
+//
+//	bootJar { enabled = false } // core 은 bootJar 로 패키징 할 필요 없음
+//	jar { enabled = true }
+//
+//	dependencies {
+//		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//		implementation 'org.springframework.boot:spring-boot-starter-validation'
+//		implementation 'org.springframework.boot:spring-boot-starter-web'
+//		implementation 'org.springframework.boot:spring-boot-starter-redis'
+//
+//		compileOnly 'org.projectlombok:lombok'
+//		annotationProcessor 'org.projectlombok:lombok'
+//
+//
+//		runtimeOnly 'com.mysql:mysql-connector-j'
+//		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//
+//		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//
+//		implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+//
+//		runtimeOnly 'com.h2database:h2'
+//	}
+//}
+//
+//project(':koonsdiary-api-server'){
+//	bootJar { enabled = true }
+//	jar { enabled = false }
+//
+//	dependencies {
+//		compile project(':koonsdiary-core') // 컴파일 시 velog-core project 로딩
+//		implementation 'org.springframework.boot:spring-boot-starter-web'
+//	}
+//}
