@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import upf2022.team464.koonsdiary.common.exception.UnAuthorizedException;
-import upf2022.team464.koonsdiary.util.jwt.JwtService;
+import upf2022.team464.common.exception.UnAuthorizedException;
+import upf2022.team464.util.jwt.JwtService;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
